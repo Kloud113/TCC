@@ -57,7 +57,7 @@
         }
 
         /* Scroll Reveal Animation Classes */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* Form Steps Animation */
@@ -68,7 +68,7 @@
         @keyframes textShine { to { background-position: 200% center; } }
         @keyframes float { 
             0% { transform: translateY(0px) scale(1); } 
-            100% { transform: translateY(-30px) scale(1.1); } 
+            100% { transform: translateY(-20px) scale(1.05); } 
         }
 
         /* The pulsating 'next steps' indicator */
@@ -98,38 +98,43 @@
 <body class="overflow-x-hidden selection:bg-pink-500 selection:text-white">
 
     <!-- NAVIGATION -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4 border-b border-transparent">
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-3 md:py-4 border-b border-transparent">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center w-full">
             <a href="#home" class="flex items-center group">
-                <img src="tcclogo.png" alt="TCC Logo" class="w-12 h-12 object-contain hover:scale-105 transition-transform duration-300">
+                <img src="TCClogo.png" alt="TCC Logo" class="w-10 h-10 md:w-12 md:h-12 object-contain hover:scale-105 transition-transform duration-300">
             </a>
+            
+            <!-- Desktop Links -->
             <div class="hidden lg:flex items-center space-x-8 text-sm font-medium text-gray-400">
                 <a href="#home" class="hover:text-white transition-colors">Home</a>
                 <a href="#why-tcc" class="hover:text-white transition-colors">About</a>
                 <a href="#services" class="hover:text-white transition-colors">What We Do</a>
-                
-                <div class="flex items-center space-x-4 pl-4 border-l border-white/10">
-                    <a href="#connect" class="bg-white text-black px-6 py-2.5 rounded-full hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 font-bold">Plan Event</a>
-                </div>
+            </div>
+
+            <!-- CTA (Always visible on mobile) -->
+            <div class="flex items-center pl-0 lg:pl-4 lg:border-l lg:border-white/10">
+                <a href="#connect" class="bg-white text-black px-5 py-2 md:px-6 md:py-2.5 rounded-full text-xs md:text-sm font-bold hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300">
+                    Plan Event
+                </a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center px-6 overflow-hidden pt-20">
-        <div class="ambient-blob bg-pink-600 w-[500px] h-[500px] top-[0%] left-[-10%]"></div>
-        <div class="ambient-blob bg-blue-600 w-[600px] h-[600px] bottom-[-20%] right-[-10%]" style="animation-delay: -5s;"></div>
+    <!-- HERO SECTION (Optimized for Mobile Height) -->
+    <section id="home" class="relative min-h-[85vh] lg:min-h-screen flex items-center justify-center px-4 md:px-6 overflow-hidden pt-20">
+        <div class="ambient-blob bg-pink-600 w-[300px] h-[300px] md:w-[500px] md:h-[500px] top-[0%] left-[-10%]"></div>
+        <div class="ambient-blob bg-blue-600 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bottom-[-20%] right-[-10%]" style="animation-delay: -5s;"></div>
 
-        <div class="max-w-5xl mx-auto text-center relative z-10 reveal">
-            <!-- UPDATED: Made Massive and Ultra-Bold -->
-            <h1 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[1.05] mb-6 logo-gradient pb-4">
+        <!-- Pulled up on mobile with -mt-12 -->
+        <div class="max-w-5xl mx-auto text-center relative z-10 reveal -mt-12 md:mt-0">
+            <h1 class="text-5xl sm:text-7xl lg:text-9xl font-black tracking-tighter leading-[1.05] mb-4 md:mb-6 logo-gradient pb-2 md:pb-4">
                 The Conference Crew.
             </h1>
-            <p class="text-xl md:text-3xl text-gray-300 mb-12 font-light tracking-wide">
+            <p class="text-lg sm:text-2xl md:text-3xl text-gray-300 mb-8 md:mb-12 font-light tracking-wide px-4">
                 Flawless events, from concept to closing.
             </p>
             <div class="flex items-center justify-center">
-                <a href="#services" class="flex items-center justify-center space-x-2 bg-white text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                <a href="#services" class="flex items-center justify-center space-x-2 bg-white text-black px-6 py-3 md:px-8 md:py-4 rounded-full font-bold hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] text-sm md:text-base">
                     Explore Our Services
                 </a>
             </div>
@@ -137,110 +142,111 @@
     </section>
 
     <!-- WHY TCC SECTION -->
-    <section id="why-tcc" class="py-24 px-6 relative z-10 border-t border-white/5 bg-[#080808]">
+    <section id="why-tcc" class="py-16 md:py-24 px-4 md:px-6 relative z-10 border-t border-white/5 bg-[#080808]">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-16 text-center reveal">
+            <div class="mb-10 md:mb-16 text-center reveal">
                 <h3 class="text-3xl md:text-5xl font-black text-white tracking-tight logo-gradient inline-block">Real Partnership For Real Results!</h3>
             </div>
-            <div class="grid md:grid-cols-2 gap-16 mb-24">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 mb-16 md:mb-24">
                 <div class="reveal">
-                    <h4 class="text-xl font-bold text-white mb-4 uppercase tracking-wider">People You Actually Enjoy Working With</h4>
-                    <div class="space-y-4 text-gray-400 leading-relaxed font-light">
+                    <h4 class="text-lg md:text-xl font-bold text-white mb-4 uppercase tracking-wider">People You Actually Enjoy Working With</h4>
+                    <div class="space-y-4 text-sm md:text-base text-gray-400 leading-relaxed font-light">
                         <p>Our team has some of the most experienced, innovative, and organized people you'll ever meet. We understand that your business and reputation are on the line, so we are here to ensure everything goes well.</p>
                         <p>Forget the untrackable budgets and endless checklists. Our crew will help you escape endless tasks and focus on the bigger picture. We simplify planning, proactively anticipate challenges, and make your event memorable.</p>
                         <p>Our professional approach means greater agility, more creativity, and no wasted spend. With us, you get enterprise-grade execution plus the trust and transparency of a true partner.</p>
                     </div>
                 </div>
                 <div class="reveal">
-                    <h4 class="text-xl font-bold text-white mb-4 uppercase tracking-wider">Events Tailored To Your Needs</h4>
-                    <div class="space-y-6 text-gray-400 leading-relaxed font-light">
+                    <h4 class="text-lg md:text-xl font-bold text-white mb-4 uppercase tracking-wider">Events Tailored To Your Needs</h4>
+                    <div class="space-y-6 text-sm md:text-base text-gray-400 leading-relaxed font-light">
                         <p>We offer event management services for your corporate events, helping you strategize everything along the way. Our goal is to ensure every corporate event is successful, meets your objectives, and exceeds your expectations.</p>
-                        <div class="p-6 border-l-4 border-pink-500 bg-white/5 rounded-r-2xl">
-                            <p class="text-lg font-medium text-white">TCC believes in partnership. It's how we do business.</p>
+                        <div class="p-4 md:p-6 border-l-4 border-pink-500 bg-white/5 rounded-r-2xl">
+                            <p class="text-base md:text-lg font-medium text-white">TCC believes in partnership. It's how we do business.</p>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="mb-12 reveal text-center md:text-left">
-                <h3 class="text-2xl font-bold text-white tracking-tight uppercase">Here's what it looks like in practice:</h3>
+            <div class="mb-8 md:mb-12 reveal text-center md:text-left">
+                <h3 class="text-xl md:text-2xl font-bold text-white tracking-tight uppercase">Here's what it looks like in practice:</h3>
             </div>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass-card p-10 rounded-3xl reveal">
-                    <h4 class="text-xl font-bold mb-4 text-white uppercase tracking-wide text-pink-400">Dedicated Event Manager</h4>
-                    <p class="text-gray-400 leading-relaxed font-light">Every TCC conducted / guided event is spearheaded by a dedicated Event Manager, your go-to person for everything you need for your event. You no longer have to juggle multiple contacts and endless emails.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <div class="glass-card p-6 md:p-10 rounded-2xl md:rounded-3xl reveal">
+                    <h4 class="text-lg md:text-xl font-bold mb-3 md:mb-4 text-white uppercase tracking-wide text-pink-400">Dedicated Event Manager</h4>
+                    <p class="text-sm md:text-base text-gray-400 leading-relaxed font-light">Every TCC conducted / guided event is spearheaded by a dedicated Event Manager, your go-to person for everything you need for your event. You no longer have to juggle multiple contacts and endless emails.</p>
                 </div>
-                <div class="glass-card p-10 rounded-3xl reveal">
-                    <h4 class="text-xl font-bold mb-4 text-white uppercase tracking-wide text-blue-400">Transparency</h4>
-                    <p class="text-gray-400 leading-relaxed font-light">Total transparency is at the heart of our event management philosophy. We provide full, detailed information on pricing, services, and timeline, ensuring clients know exactly what to expect. From vendor co-ordination to budget tracking, every step is accountable.</p>
+                <div class="glass-card p-6 md:p-10 rounded-2xl md:rounded-3xl reveal">
+                    <h4 class="text-lg md:text-xl font-bold mb-3 md:mb-4 text-white uppercase tracking-wide text-blue-400">Transparency</h4>
+                    <p class="text-sm md:text-base text-gray-400 leading-relaxed font-light">Total transparency is at the heart of our event management philosophy. We provide full, detailed information on pricing, services, and timeline, ensuring clients know exactly what to expect. From vendor co-ordination to budget tracking, every step is accountable.</p>
                 </div>
-                <div class="glass-card p-10 rounded-3xl reveal">
-                    <h4 class="text-xl font-bold mb-4 text-white uppercase tracking-wide text-green-400">Flexible Pricing</h4>
-                    <p class="text-gray-400 leading-relaxed font-light">We work with you to understand the scope and budget, then create a total project management fee. We don't hide things / facts, and there are no surprises at the end of the project.</p>
+                <div class="glass-card p-6 md:p-10 rounded-2xl md:rounded-3xl reveal">
+                    <h4 class="text-lg md:text-xl font-bold mb-3 md:mb-4 text-white uppercase tracking-wide text-green-400">Flexible Pricing</h4>
+                    <p class="text-sm md:text-base text-gray-400 leading-relaxed font-light">We work with you to understand the scope and budget, then create a total project management fee. We don't hide things / facts, and there are no surprises at the end of the project.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FULL SERVICES GRID -->
-    <section id="services" class="py-24 px-6 relative">
-        <div class="ambient-blob bg-green-600 w-[500px] h-[500px] top-[20%] right-[-10%] opacity-10"></div>
+    <section id="services" class="py-16 md:py-24 px-4 md:px-6 relative">
+        <div class="ambient-blob bg-green-600 w-[300px] h-[300px] top-[20%] right-[-10%] opacity-10"></div>
         <div class="max-w-7xl mx-auto">
-            <h3 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-16 reveal">Our services include</h3>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <h3 class="text-3xl md:text-5xl font-black text-white tracking-tight mb-10 md:mb-16 reveal text-center md:text-left">Our services include</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 <!-- 1 -->
-                <div class="glass-card p-8 rounded-3xl reveal group hover:border-pink-500/50">
-                    <div class="flex items-center space-x-3 mb-4"><i data-lucide="calendar-check" class="text-pink-500"></i><h4 class="text-xl font-bold text-white tracking-tight">Logistics Management</h4></div>
+                <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl reveal group hover:border-pink-500/50">
+                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="calendar-check" class="text-pink-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Logistics Management</h4></div>
                     <p class="text-sm text-gray-400 leading-relaxed font-light">We manage every moving part, from timeline management to onsite setup, anticipating challenges for a seamless experience.</p>
                 </div>
                 <!-- 2 -->
-                <div class="glass-card p-8 rounded-3xl reveal group hover:border-purple-500/50">
-                    <div class="flex items-center space-x-3 mb-4"><i data-lucide="calculator" class="text-purple-500"></i><h4 class="text-xl font-bold text-white tracking-tight">Budgeting</h4></div>
+                <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl reveal group hover:border-purple-500/50">
+                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="calculator" class="text-purple-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Budgeting</h4></div>
                     <p class="text-sm text-gray-400 leading-relaxed font-light">Build clear, flexible budgets. We identify cost-saving opportunities without ever compromising on quality or impact.</p>
                 </div>
                 <!-- 3 -->
-                <div class="glass-card p-8 rounded-3xl reveal group hover:border-blue-500/50">
-                    <div class="flex items-center space-x-3 mb-4"><i data-lucide="target" class="text-blue-500"></i><h4 class="text-xl font-bold text-white tracking-tight">Strategy Design</h4></div>
+                <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl reveal group hover:border-blue-500/50">
+                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="target" class="text-blue-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Strategy Design</h4></div>
                     <p class="text-sm text-gray-400 leading-relaxed font-light">We work closely with you to design a strategic event where every single element supports your overarching business goals.</p>
                 </div>
                 <!-- 4 -->
-                <div class="glass-card p-8 rounded-3xl reveal group hover:border-green-500/50">
-                    <div class="flex items-center space-x-3 mb-4"><i data-lucide="map-pin" class="text-green-500"></i><h4 class="text-xl font-bold text-white tracking-tight">Site Selection</h4></div>
+                <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl reveal group hover:border-green-500/50">
+                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="map-pin" class="text-green-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Site Selection</h4></div>
                     <p class="text-sm text-gray-400 leading-relaxed font-light">We discover, negotiate, and contract the ideal location perfectly matched to your attendees, agenda, and budget.</p>
                 </div>
                 <!-- 5 -->
-                <div class="glass-card p-8 rounded-3xl reveal group hover:border-yellow-500/50">
-                    <div class="flex items-center space-x-3 mb-4"><i data-lucide="party-popper" class="text-yellow-500"></i><h4 class="text-xl font-bold text-white tracking-tight">Entertainment</h4></div>
+                <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl reveal group hover:border-yellow-500/50">
+                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="party-popper" class="text-yellow-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Entertainment</h4></div>
                     <p class="text-sm text-gray-400 leading-relaxed font-light">Curated entertainment and meticulous coordination for seamless, memorable gatherings that accurately reflect your brand.</p>
                 </div>
                 <!-- 6 -->
-                <div class="glass-card p-8 rounded-3xl reveal group hover:border-orange-500/50">
-                    <div class="flex items-center space-x-3 mb-4"><i data-lucide="utensils" class="text-orange-500"></i><h4 class="text-xl font-bold text-white tracking-tight">Food & Beverage</h4></div>
+                <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl reveal group hover:border-orange-500/50">
+                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="utensils" class="text-orange-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Food & Beverage</h4></div>
                     <p class="text-sm text-gray-400 leading-relaxed font-light">Exceptional culinary quality with operational efficiency, delivering reliable solutions fully aligned with your vision.</p>
                 </div>
                 <!-- 7 -->
-                <div class="glass-card p-8 rounded-3xl reveal group hover:border-pink-500/50">
-                    <div class="flex items-center space-x-3 mb-4"><i data-lucide="palette" class="text-pink-500"></i><h4 class="text-xl font-bold text-white tracking-tight">Branding & Signage</h4></div>
+                <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl reveal group hover:border-pink-500/50">
+                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="palette" class="text-pink-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Branding & Signage</h4></div>
                     <p class="text-sm text-gray-400 leading-relaxed font-light">Creative visual services—from stage design to branded swag—that ensure every element aligns perfectly with your identity.</p>
                 </div>
                 <!-- 8 -->
-                <div class="glass-card p-8 rounded-3xl reveal group hover:border-purple-500/50">
-                    <div class="flex items-center space-x-3 mb-4"><i data-lucide="gift" class="text-purple-500"></i><h4 class="text-xl font-bold text-white tracking-tight">Corporate Swag</h4></div>
+                <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl reveal group hover:border-purple-500/50">
+                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="gift" class="text-purple-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Corporate Swag</h4></div>
                     <p class="text-sm text-gray-400 leading-relaxed font-light">Go beyond standard giveaways. We source unique, customized items, attire, and awards that truly delight your attendees.</p>
                 </div>
                 <!-- 9 -->
-                <div class="glass-card p-8 rounded-3xl reveal group hover:border-blue-500/50">
-                    <div class="flex items-center space-x-3 mb-4"><i data-lucide="mic" class="text-blue-500"></i><h4 class="text-xl font-bold text-white tracking-tight">Speaker Mgmt</h4></div>
+                <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl reveal group hover:border-blue-500/50">
+                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="mic" class="text-blue-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Speaker Mgmt</h4></div>
                     <p class="text-sm text-gray-400 leading-relaxed font-light">Connect with professionals from diverse fields to amplify your event's visibility, excitement, and credibility.</p>
                 </div>
                 <!-- 10 -->
-                <div class="glass-card p-8 rounded-3xl reveal group hover:border-green-500/50">
-                    <div class="flex items-center space-x-3 mb-4"><i data-lucide="users" class="text-green-500"></i><h4 class="text-xl font-bold text-white tracking-tight">Vendor Management</h4></div>
+                <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl reveal group hover:border-green-500/50">
+                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="users" class="text-green-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Vendor Management</h4></div>
                     <p class="text-sm text-gray-400 leading-relaxed font-light">We secure and manage dependable vendors for decor, catering, and technical support to consistently deliver high-quality results.</p>
                 </div>
                 <!-- 11 -->
-                <div class="glass-card p-8 rounded-3xl reveal group hover:border-yellow-500/50 lg:col-span-2">
-                    <div class="flex items-center space-x-3 mb-4"><i data-lucide="truck" class="text-yellow-500"></i><h4 class="text-xl font-bold text-white tracking-tight">Logistics (On & Off-Site)</h4></div>
+                <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl reveal group hover:border-yellow-500/50 lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="truck" class="text-yellow-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Logistics (On & Off-Site)</h4></div>
                     <p class="text-sm text-gray-400 leading-relaxed font-light">Precise coordination of transport, equipment, and vendor flow to maintain strict control behind the scenes.</p>
                 </div>
             </div>
@@ -248,122 +254,125 @@
     </section>
 
     <!-- EVENT TYPES GRID -->
-    <section class="py-24 px-6 bg-[#080808] border-t border-white/5">
+    <section class="py-16 md:py-24 px-4 md:px-6 bg-[#080808] border-t border-white/5">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-16 text-center reveal">
-                <h3 class="text-3xl md:text-5xl font-black text-white tracking-tight uppercase logo-gradient inline-block">You Ideate, We Create, And Elevate</h3>
+            <div class="mb-10 md:mb-16 text-center reveal">
+                <h3 class="text-2xl sm:text-3xl md:text-5xl font-black text-white tracking-tight uppercase logo-gradient inline-block">You Ideate, We Create, And Elevate</h3>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-6 md:gap-y-10">
                 <div class="border-l-2 border-pink-500 pl-4 reveal">
-                    <h4 class="text-xl font-bold text-white mb-2">Incentive Travel</h4>
-                    <p class="text-sm text-gray-400 font-light leading-relaxed">Curated incentive travel programs designed to reward, inspire and motivate your teams.</p>
+                    <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Incentive Travel</h4>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Curated incentive travel programs designed to reward, inspire and motivate your teams.</p>
                 </div>
                 <div class="border-l-2 border-purple-500 pl-4 reveal">
-                    <h4 class="text-xl font-bold text-white mb-2">Sales Meets</h4>
-                    <p class="text-sm text-gray-400 font-light leading-relaxed">High-impact sales conferences focused on alignment, performance and growth.</p>
+                    <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Sales Meets</h4>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">High-impact sales conferences focused on alignment, performance and growth.</p>
                 </div>
                 <div class="border-l-2 border-blue-500 pl-4 reveal">
-                    <h4 class="text-xl font-bold text-white mb-2">Product Launches</h4>
-                    <p class="text-sm text-gray-400 font-light leading-relaxed">Strategic product unveilings that generate visibility, engagement and market buzz.</p>
+                    <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Product Launches</h4>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Strategic product unveilings that generate visibility, engagement and market buzz.</p>
                 </div>
                 <div class="border-l-2 border-green-500 pl-4 reveal">
-                    <h4 class="text-xl font-bold text-white mb-2">Conferences</h4>
-                    <p class="text-sm text-gray-400 font-light leading-relaxed">End-to-end planning and execution for large-scale and multi-day conferences.</p>
+                    <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Conferences</h4>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">End-to-end planning and execution for large-scale and multi-day conferences.</p>
                 </div>
                 <div class="border-l-2 border-yellow-500 pl-4 reveal">
-                    <h4 class="text-xl font-bold text-white mb-2">Corporate Meetings</h4>
-                    <p class="text-sm text-gray-400 font-light leading-relaxed">Professional meetings delivered with seamless coordination and precision.</p>
+                    <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Corporate Meetings</h4>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Professional meetings delivered with seamless coordination and precision.</p>
                 </div>
                 <div class="border-l-2 border-orange-500 pl-4 reveal">
-                    <h4 class="text-xl font-bold text-white mb-2">Hybrid Events</h4>
-                    <p class="text-sm text-gray-400 font-light leading-relaxed">Integrated physical and virtual experiences for wider reach and engagement.</p>
+                    <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Hybrid Events</h4>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Integrated physical and virtual experiences for wider reach and engagement.</p>
                 </div>
                 <div class="border-l-2 border-pink-500 pl-4 reveal">
-                    <h4 class="text-xl font-bold text-white mb-2">Personal Events</h4>
-                    <p class="text-sm text-gray-400 font-light leading-relaxed">Thoughtfully planned private celebrations with personalised execution.</p>
+                    <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Personal Events</h4>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Thoughtfully planned private celebrations with personalised execution.</p>
                 </div>
                 <div class="border-l-2 border-purple-500 pl-4 reveal">
-                    <h4 class="text-xl font-bold text-white mb-2">Celebrations</h4>
-                    <p class="text-sm text-gray-400 font-light leading-relaxed">Festive corporate and milestone events crafted to create memorable moments.</p>
+                    <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Celebrations</h4>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Festive corporate and milestone events crafted to create memorable moments.</p>
                 </div>
                 <div class="border-l-2 border-blue-500 pl-4 reveal">
-                    <h4 class="text-xl font-bold text-white mb-2">TLB</h4>
-                    <p class="text-sm text-gray-400 font-light leading-relaxed">For diverse and dispersed group needs.</p>
+                    <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">TLB</h4>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">For diverse and dispersed group needs.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- INTERACTIVE CONTACT FORM -->
-    <section id="connect" class="py-32 px-6 relative overflow-hidden border-t border-white/5">
-        <div class="ambient-blob bg-purple-600 w-[600px] h-[600px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-10"></div>
-        <div class="max-w-6xl mx-auto bg-[#0a0a0a] border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl relative z-10 flex flex-col md:flex-row reveal">
+    <section id="connect" class="py-16 md:py-32 px-4 md:px-6 relative overflow-hidden border-t border-white/5">
+        <div class="ambient-blob bg-purple-600 w-[300px] h-[300px] md:w-[600px] md:h-[600px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-10"></div>
+        <div class="max-w-6xl mx-auto bg-[#0a0a0a] border border-white/10 rounded-3xl md:rounded-[2rem] overflow-hidden shadow-2xl relative z-10 flex flex-col md:flex-row reveal">
+            
             <!-- Contact details HIGHLIGHTED -->
-            <div class="md:w-5/12 p-12 bg-white/5 border-r border-white/5 flex flex-col justify-between">
+            <div class="md:w-5/12 p-6 md:p-12 bg-white/5 border-b md:border-b-0 md:border-r border-white/5 flex flex-col justify-between">
                 <div>
-                    <h3 class="text-3xl font-bold text-white mb-4 tracking-tight">Let's Plan A Flawless Corporate Experience.</h3>
-                    <p class="text-gray-400 mb-12 font-light">From Concept To Closing.</p>
+                    <h3 class="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-4 tracking-tight">Let's Plan A Flawless Corporate Experience.</h3>
+                    <p class="text-sm md:text-base text-gray-400 mb-8 md:mb-12 font-light">From Concept To Closing.</p>
                 </div>
-                <div class="space-y-6">
-                    <div class="glass-card p-6 rounded-2xl flex items-center space-x-4 border border-pink-500/20 bg-pink-500/5 hover:border-pink-500/40 transition-all">
-                        <div class="w-14 h-14 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-500"><i data-lucide="phone" class="w-6 h-6"></i></div>
-                        <div><p class="text-xs font-bold text-pink-400 uppercase mb-1 tracking-wider">Call Us</p><p class="text-xl font-bold text-white tracking-tight">+91 93228 86886</p></div>
+                <div class="space-y-4 md:space-y-6">
+                    <div class="glass-card p-4 md:p-6 rounded-2xl flex items-center space-x-4 border border-pink-500/20 bg-pink-500/5 hover:border-pink-500/40 transition-all">
+                        <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-pink-500/20 flex shrink-0 items-center justify-center text-pink-500"><i data-lucide="phone" class="w-5 h-5 md:w-6 md:h-6"></i></div>
+                        <div><p class="text-[10px] md:text-xs font-bold text-pink-400 uppercase mb-1 tracking-wider">Call Us</p><p class="text-base md:text-xl font-bold text-white tracking-tight">+91 93228 86886</p></div>
                     </div>
-                    <div class="glass-card p-6 rounded-2xl flex items-center space-x-4 border border-blue-500/20 bg-blue-500/5 hover:border-blue-500/40 transition-all">
-                        <div class="w-14 h-14 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500"><i data-lucide="mail" class="w-6 h-6"></i></div>
-                        <div><p class="text-xs font-bold text-blue-400 uppercase mb-1 tracking-wider">Email</p><p class="text-lg font-bold text-white tracking-tight">tcc@theconferencecrew.com</p></div>
+                    <div class="glass-card p-4 md:p-6 rounded-2xl flex items-center space-x-4 border border-blue-500/20 bg-blue-500/5 hover:border-blue-500/40 transition-all">
+                        <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-blue-500/20 flex shrink-0 items-center justify-center text-blue-500"><i data-lucide="mail" class="w-5 h-5 md:w-6 md:h-6"></i></div>
+                        <div><p class="text-[10px] md:text-xs font-bold text-blue-400 uppercase mb-1 tracking-wider">Email</p><p class="text-sm md:text-lg font-bold text-white tracking-tight break-all">tcc@theconferencecrew.com</p></div>
                     </div>
                 </div>
             </div>
 
-            <div class="md:w-7/12 p-12 relative min-h-[500px] flex flex-col">
+            <div class="md:w-7/12 p-6 md:p-12 relative min-h-[400px] md:min-h-[500px] flex flex-col">
                 <div class="absolute top-0 left-0 w-full h-1 bg-white/5"><div id="progressBar" class="h-full bg-gradient-to-r from-pink-500 to-blue-500 transition-all duration-500" style="width: 33%;"></div></div>
-                <div id="successState" class="form-hidden h-full flex flex-col items-center justify-center text-center"><div class="w-20 h-20 bg-green-500/10 border border-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-6"><i data-lucide="check" class="w-10 h-10"></i></div><h3 class="text-2xl font-bold text-white mb-2">Enquiry Submitted</h3><p class="text-gray-400">Our team will connect shortly.</p></div>
+                <div id="successState" class="form-hidden h-full flex flex-col items-center justify-center text-center"><div class="w-16 h-16 md:w-20 md:h-20 bg-green-500/10 border border-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-4 md:mb-6"><i data-lucide="check" class="w-8 h-8 md:w-10 md:h-10"></i></div><h3 class="text-xl md:text-2xl font-bold text-white mb-2">Enquiry Submitted</h3><p class="text-sm md:text-base text-gray-400">Our team will connect shortly.</p></div>
 
                 <form id="contactForm" class="flex-1 flex flex-col" onsubmit="submitForm(event)">
                     <div class="relative flex-1">
                         <!-- Step 1 -->
                         <div id="step1" class="form-step form-active">
-                            <h4 class="text-xl font-bold text-white mb-8">Send Us Your Contact Details</h4>
-                            <div class="space-y-5">
-                                <div class="grid grid-cols-2 gap-5"><input type="text" placeholder="Your Name" class="w-full px-5 py-4 rounded-xl" required><input type="email" placeholder="Email Address" class="w-full px-5 py-4 rounded-xl" required></div>
-                                <div class="grid grid-cols-2 gap-5"><input type="tel" placeholder="Contact Number" class="w-full px-5 py-4 rounded-xl" required><input type="text" placeholder="Company" class="w-full px-5 py-4 rounded-xl"></div>
+                            <h4 class="text-lg md:text-xl font-bold text-white mb-6 md:mb-8">Send Us Your Contact Details</h4>
+                            <div class="space-y-4 md:space-y-5">
+                                <!-- Inputs stack vertically on mobile (grid-cols-1), side-by-side on desktop (md:grid-cols-2) -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5"><input type="text" placeholder="Your Name" class="w-full px-4 py-3 md:px-5 md:py-4 rounded-xl text-sm" required><input type="email" placeholder="Email Address" class="w-full px-4 py-3 md:px-5 md:py-4 rounded-xl text-sm" required></div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5"><input type="tel" placeholder="Contact Number" class="w-full px-4 py-3 md:px-5 md:py-4 rounded-xl text-sm" required><input type="text" placeholder="Company" class="w-full px-4 py-3 md:px-5 md:py-4 rounded-xl text-sm"></div>
                             </div>
                         </div>
                         <!-- Step 2 -->
                         <div id="step2" class="form-step form-hidden">
-                            <h4 class="text-xl font-bold text-white mb-8">Event Basics</h4>
-                            <div class="space-y-5">
-                                <select class="w-full px-5 py-4 rounded-xl appearance-none" required><option value="" disabled selected>Select Event Type</option><option>Conference</option><option>Incentive Travel</option><option>Product Launch</option></select>
-                                <input type="text" placeholder="Event City" class="w-full px-5 py-4 rounded-xl">
+                            <h4 class="text-lg md:text-xl font-bold text-white mb-6 md:mb-8">Event Basics</h4>
+                            <div class="space-y-4 md:space-y-5">
+                                <select class="w-full px-4 py-3 md:px-5 md:py-4 rounded-xl appearance-none text-sm" required><option value="" disabled selected>Select Event Type</option><option>Conference</option><option>Incentive Travel</option><option>Product Launch</option></select>
+                                <input type="text" placeholder="Event City" class="w-full px-4 py-3 md:px-5 md:py-4 rounded-xl text-sm">
                             </div>
                         </div>
                         <!-- Step 3 -->
                         <div id="step3" class="form-step form-hidden">
-                            <h4 class="text-xl font-bold text-white mb-6">Event Requirements</h4>
-                            <div class="space-y-4">
-                                <textarea rows="3" placeholder="Briefly describe requirement..." class="w-full px-5 py-4 rounded-xl resize-none" required></textarea>
-                                <textarea rows="3" placeholder="Anything else you'd like us to know? (Optional)" class="w-full px-5 py-4 rounded-xl resize-none"></textarea>
+                            <h4 class="text-lg md:text-xl font-bold text-white mb-4 md:mb-6">Event Requirements</h4>
+                            <div class="space-y-3 md:space-y-4">
+                                <textarea rows="3" placeholder="Briefly describe requirement..." class="w-full px-4 py-3 md:px-5 md:py-4 rounded-xl resize-none text-sm" required></textarea>
+                                <textarea rows="3" placeholder="Anything else you'd like us to know? (Optional)" class="w-full px-4 py-3 md:px-5 md:py-4 rounded-xl resize-none text-sm"></textarea>
                             </div>
-                            <p class="text-xs text-gray-500 mt-4 text-center">Please indicate a convenient time to connect on call.</p>
+                            <p class="text-[10px] md:text-xs text-gray-500 mt-3 md:mt-4 text-center">Please indicate a convenient time to connect on call.</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between pt-8 mt-auto border-t border-white/5">
-                        <button type="button" id="btnBack" onclick="prevStep()" class="text-gray-400 hover:text-white transition-colors invisible font-medium text-sm flex items-center"><i data-lucide="arrow-left" class="w-4 h-4 mr-1"></i> Back</button>
-                        <button type="button" id="btnNext" onclick="nextStep()" class="bg-gradient-to-r from-pink-500 to-blue-500 text-white px-8 py-3 rounded-full font-bold hover:scale-105 transition-all text-sm shadow-[0_0_15px_rgba(236,72,153,0.3)] flex items-center pulsate">Next Step <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></button>
-                        <button type="submit" id="btnSubmit" class="hidden bg-gradient-to-r from-pink-500 to-blue-500 text-white px-8 py-3 rounded-full font-bold hover:scale-105 transition-all text-sm shadow-[0_0_15px_rgba(236,72,153,0.3)] flex items-center">Submit Enquiry <i data-lucide="check-circle-2" class="w-4 h-4 ml-2"></i></button>
+                    
+                    <div class="flex items-center justify-between pt-6 md:pt-8 mt-4 md:mt-auto border-t border-white/5">
+                        <button type="button" id="btnBack" onclick="prevStep()" class="text-gray-400 hover:text-white transition-colors invisible font-medium text-xs md:text-sm flex items-center p-2"><i data-lucide="arrow-left" class="w-4 h-4 mr-1"></i> Back</button>
+                        <button type="button" id="btnNext" onclick="nextStep()" class="bg-gradient-to-r from-pink-500 to-blue-500 text-white px-6 py-2.5 md:px-8 md:py-3 rounded-full font-bold hover:scale-105 transition-all text-xs md:text-sm shadow-[0_0_15px_rgba(236,72,153,0.3)] flex items-center pulsate">Next Step <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></button>
+                        <button type="submit" id="btnSubmit" class="hidden bg-gradient-to-r from-pink-500 to-blue-500 text-white px-6 py-2.5 md:px-8 md:py-3 rounded-full font-bold hover:scale-105 transition-all text-xs md:text-sm shadow-[0_0_15px_rgba(236,72,153,0.3)] flex items-center">Submit <i data-lucide="check-circle-2" class="w-4 h-4 ml-2"></i></button>
                     </div>
                 </form>
             </div>
         </div>
     </section>
 
-    <footer class="py-8 text-center text-gray-600 text-sm border-t border-white/5 bg-[#050505]"><p>© 2026 The Conference Crew Mumbai</p></footer>
+    <footer class="py-6 md:py-8 text-center text-gray-600 text-xs md:text-sm border-t border-white/5 bg-[#050505]"><p>© 2026 The Conference Crew Mumbai</p></footer>
 
     <script>
         lucide.createIcons();
-        window.addEventListener('scroll', () => { const nav = document.getElementById('navbar'); if (window.scrollY > 20) { nav.classList.add('bg-[#050505]/90', 'backdrop-blur-md', 'border-white/5'); nav.classList.remove('border-transparent'); } else { nav.classList.remove('bg-[#050505]/90', 'backdrop-blur-md', 'border-white/5'); nav.classList.add('border-transparent'); } });
-        function reveal() { var reveals = document.querySelectorAll(".reveal"); for (var i = 0; i < reveals.length; i++) { var windowHeight = window.innerHeight; var elementTop = reveals[i].getBoundingClientRect().top; var elementVisible = 100; if (elementTop < windowHeight - elementVisible) { reveals[i].classList.add("active"); } } }
+        window.addEventListener('scroll', () => { const nav = document.getElementById('navbar'); if (window.scrollY > 20) { nav.classList.add('bg-[#050505]/90', 'backdrop-blur-md', 'border-white/5'); nav.classList.remove('border-transparent', 'py-3', 'md:py-4'); nav.classList.add('py-2', 'md:py-3'); } else { nav.classList.remove('bg-[#050505]/90', 'backdrop-blur-md', 'border-white/5', 'py-2', 'md:py-3'); nav.classList.add('border-transparent', 'py-3', 'md:py-4'); } });
+        function reveal() { var reveals = document.querySelectorAll(".reveal"); for (var i = 0; i < reveals.length; i++) { var windowHeight = window.innerHeight; var elementTop = reveals[i].getBoundingClientRect().top; var elementVisible = 50; if (elementTop < windowHeight - elementVisible) { reveals[i].classList.add("active"); } } }
         window.addEventListener("scroll", reveal); reveal(); 
         let step = 1;
         function updateForm() { document.querySelectorAll('.form-step').forEach((el, index) => { if (index + 1 === step) { el.classList.remove('form-hidden'); el.classList.add('form-active'); } else { el.classList.remove('form-active'); el.classList.add('form-hidden'); } }); document.getElementById('progressBar').style.width = (step / 3) * 100 + '%'; document.getElementById('btnBack').style.visibility = step > 1 ? 'visible' : 'hidden'; if (step === 3) { document.getElementById('btnNext').classList.add('hidden'); document.getElementById('btnNext').classList.remove('flex'); document.getElementById('btnSubmit').classList.remove('hidden'); document.getElementById('btnSubmit').classList.add('flex'); } else { document.getElementById('btnNext').classList.remove('hidden'); document.getElementById('btnNext').classList.add('flex'); document.getElementById('btnSubmit').classList.add('hidden'); document.getElementById('btnSubmit').classList.remove('flex'); } }
