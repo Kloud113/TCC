@@ -11,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* FIX: Absolute horizontal lock to prevent mobile wobbling */
         html, body {
             max-width: 100vw;
             overflow-x: hidden;
@@ -49,26 +48,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
         }
-        .glass-card:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
-        }
-
-        /* Hide scrollbars for mobile carousels */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        .img-reveal { transform: scale(1.15); transition: transform 1.5s cubic-bezier(0.2, 0, 0.2, 1); }
-        .reveal.active .img-reveal { transform: scale(1); }
-
-        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
 
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
@@ -107,21 +87,28 @@
             box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
         }
         option { background: #1a1a1a; color: white; }
+
+        /* Mobile Menu State Configuration */
+        #mobileMenu.open { opacity: 1; pointer-events: auto; transform: scale(1); }
     </style>
 </head>
 <body class="selection:bg-pink-500 selection:text-white">
 
+    <!-- Sticky Bottom Thumb CTA (Perfect Mobile Target) -->
     <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] lg:hidden w-[90%] max-w-sm pointer-events-none flex justify-center">
         <a href="#connect" class="pointer-events-auto flex items-center justify-center w-full bg-gradient-to-r from-pink-600 to-blue-600 text-white px-6 py-4 rounded-full font-bold text-[15px] shadow-[0_10px_40px_rgba(236,72,153,0.4)] active:scale-95 transition-all backdrop-blur-md border border-white/10">
             Plan Your Event <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
         </a>
     </div>
 
+    <!-- Navigation Header -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-3 md:py-5 border-b border-transparent">
         <div class="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center w-full">
             <a href="#home" class="flex items-center group animate-hero-1 active:scale-95 transition-transform">
                 <img src="tcclogo.png" alt="TCC Logo" class="w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 object-contain hover:scale-105 transition-transform duration-300">
             </a>
+            
+            <!-- Desktop Nav System -->
             <div class="hidden lg:flex items-center space-x-8 text-sm font-medium text-gray-400">
                 <a href="#home" class="hover:text-white transition-colors">Home</a>
                 <a href="#why-tcc" class="hover:text-white transition-colors">About</a>
@@ -130,9 +117,25 @@
                     <a href="#connect" class="bg-white text-black px-6 py-2.5 rounded-full hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] active:scale-95 transition-all duration-300 font-bold">Plan Event</a>
                 </div>
             </div>
+
+            <!-- Mobile Interactive Hamburger -->
+            <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-xl text-white active:scale-90 transition-transform">
+                <i data-lucide="menu" id="menuIcon" class="w-5 h-5"></i>
+            </button>
         </div>
     </nav>
 
+    <!-- Fullscreen Mobile Menu Overlay -->
+    <div id="mobileMenu" class="fixed inset-0 bg-[#050505]/98 backdrop-blur-xl z-40 opacity-0 pointer-events-none transform scale-95 transition-all duration-300 ease-out flex flex-col justify-center px-6 lg:hidden">
+        <div class="flex flex-col space-y-6 text-2xl font-bold tracking-tight">
+            <a href="#home" onclick="toggleMobileMenu()" class="text-gray-400 hover:text-white transition-colors">01 / Home</a>
+            <a href="#why-tcc" onclick="toggleMobileMenu()" class="text-gray-400 hover:text-white transition-colors">02 / About</a>
+            <a href="#services" onclick="toggleMobileMenu()" class="text-gray-400 hover:text-white transition-colors">03 / What We Do</a>
+            <a href="#connect" onclick="toggleMobileMenu()" class="inline-block bg-white text-black text-center py-4 rounded-xl text-base font-bold tracking-normal">Plan Your Event</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
     <section id="home" class="relative min-h-[85vh] lg:min-h-screen flex items-center justify-center px-4 md:px-6 overflow-hidden pt-24 md:pt-20">
         <div class="ambient-blob bg-pink-600 w-[300px] h-[300px] md:w-[500px] md:h-[500px] top-[0%] left-[-10%]"></div>
         <div class="ambient-blob bg-blue-600 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bottom-[-20%] right-[-10%]" style="animation-delay: -5s;"></div>
@@ -154,6 +157,7 @@
         </div>
     </section>
 
+    <!-- About Section -->
     <section id="why-tcc" class="py-16 md:py-24 px-4 md:px-6 relative z-10 border-t border-white/5 bg-[#080808]">
         <div class="max-w-7xl mx-auto">
             <div class="mb-12 md:mb-16 text-center reveal">
@@ -164,7 +168,6 @@
                 <div class="lg:col-span-5 flex flex-col justify-center space-y-8 md:space-y-10 order-2 lg:order-1">
                     <div class="reveal">
                         <h4 class="text-lg md:text-xl font-bold text-white mb-3 md:mb-4 uppercase tracking-wider">People You Actually Enjoy Working With</h4>
-                        
                         <div id="about-text" class="space-y-3 md:space-y-4 text-sm md:text-base text-gray-400 leading-relaxed font-light relative overflow-hidden max-h-[140px] md:max-h-full transition-all duration-500">
                             <p>Our team has some of the most experienced, innovative, and organized people you'll ever meet. We understand that your business and reputation are on the line, so we are here to ensure everything goes well.</p>
                             <p>Forget the untrackable budgets and endless checklists. Our crew will help you escape endless tasks and focus on the bigger picture. We simplify planning, proactively anticipate challenges, and make your event memorable.</p>
@@ -187,7 +190,7 @@
                 
                 <div class="lg:col-span-7 reveal h-full order-1 lg:order-2">
                     <div class="glass-card rounded-2xl md:rounded-[2rem] overflow-hidden h-[300px] md:h-full md:min-h-[400px] border-white/10 relative group">
-                        <img src="img1.jpeg" alt="TCC Massive Scale Event" class="w-full h-full object-cover img-reveal filter brightness-90">
+                        <img src="img1.jpeg" alt="TCC Massive Scale Event" class="w-full h-full object-cover filter brightness-90">
                         <div class="absolute bottom-0 left-0 w-full p-4 md:p-8 bg-gradient-to-t from-black via-black/80 to-transparent">
                             <p class="text-pink-400 font-bold text-[10px] md:text-xs uppercase tracking-widest mb-1">Scale & Execution</p>
                             <p class="text-white font-medium text-xs md:text-sm">Managing massive attendee cohorts with seamless precision.</p>
@@ -196,185 +199,237 @@
                 </div>
             </div>
             
+            <!-- Value Prop Index (Clean Vertical) -->
             <div class="mb-6 md:mb-12 reveal text-center md:text-left">
-                <h3 class="text-xl md:text-2xl font-bold text-white tracking-tight uppercase">Here's what it looks like in practice:</h3>
+                <h3 class="text-xl md:text-2xl font-bold text-white tracking-tight uppercase">Here's what it looks like in practice</h3>
             </div>
 
-            <div class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 md:grid md:grid-cols-3 md:gap-6 pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 items-stretch reveal auto-scroll-track">
-                <div class="glass-card p-6 md:p-10 rounded-2xl md:rounded-3xl flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <h4 class="text-lg md:text-xl font-bold mb-3 md:mb-4 text-white uppercase tracking-wide text-pink-400">Dedicated Event Manager</h4>
-                    <p class="text-gray-400 leading-relaxed font-light text-sm md:text-base">Every TCC conducted / guided event is spearheaded by a dedicated Event Manager, your go-to person for everything you need. You no longer have to juggle multiple contacts.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch reveal">
+                <div class="glass-card p-6 md:p-10 rounded-2xl md:rounded-3xl flex flex-col">
+                    <h4 class="text-lg md:text-xl font-bold mb-3 md:mb-4 uppercase tracking-wide text-pink-400">Dedicated Event Manager</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">Every TCC conducted / guided event is spearheaded by a dedicated Event Manager, your go-to person for everything you need. You no longer have to juggle multiple contacts.</p>
                 </div>
-                <div class="glass-card p-6 md:p-10 rounded-2xl md:rounded-3xl flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <h4 class="text-lg md:text-xl font-bold mb-3 md:mb-4 text-white uppercase tracking-wide text-blue-400">Transparency</h4>
-                    <p class="text-gray-400 leading-relaxed font-light text-sm md:text-base">Total transparency is at the heart of our event management philosophy. We provide full, detailed information on pricing, services, and timeline, ensuring clients know exactly what to expect.</p>
+                <div class="glass-card p-6 md:p-10 rounded-2xl md:rounded-3xl flex flex-col">
+                    <h4 class="text-lg md:text-xl font-bold mb-3 md:mb-4 uppercase tracking-wide text-blue-400">Transparency</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">Total transparency is at the heart of our event management philosophy. We provide full, detailed information on pricing, services, and timeline, ensuring clients know exactly what to expect.</p>
                 </div>
-                <div class="glass-card p-6 md:p-10 rounded-2xl md:rounded-3xl flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <h4 class="text-lg md:text-xl font-bold mb-3 md:mb-4 text-white uppercase tracking-wide text-green-400">Flexible Pricing</h4>
-                    <p class="text-gray-400 leading-relaxed font-light text-sm md:text-base">We work with you to understand the scope and budget, then create a total project management fee. We don't hide things / facts, and there are no surprises at the end of the project.</p>
-                </div>
-            </div>
-            
-            <div class="flex justify-center md:hidden mt-6 mb-2">
-                <div class="flex items-center gap-2 bg-white/10 border border-white/20 px-5 py-2.5 rounded-full text-white text-xs font-semibold animate-pulse shadow-[0_0_15px_rgba(255,255,255,0.1)] backdrop-blur-sm">
-                    <i data-lucide="move-horizontal" class="w-4 h-4"></i> Swipe to Explore
+                <div class="glass-card p-6 md:p-10 rounded-2xl md:rounded-3xl flex flex-col">
+                    <h4 class="text-lg md:text-xl font-bold mb-3 md:mb-4 uppercase tracking-wide text-green-400">Flexible Pricing</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">We work with you to understand the scope and budget, then create a total project management fee. We don't hide facts, and there are no surprises at the end of the project.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Services Section (New Premium Index Layout) -->
     <section id="services" class="py-16 md:py-24 px-4 md:px-6 relative">
         <div class="ambient-blob bg-green-600 w-[300px] h-[300px] top-[20%] right-[-10%] opacity-10"></div>
+        
         <div class="max-w-7xl mx-auto">
-            <h3 class="text-3xl md:text-5xl font-black text-white tracking-tight mb-8 md:mb-16 reveal text-center md:text-left">Our services include</h3>
+            <div class="mb-12 md:mb-16 reveal text-center md:text-left">
+                <h3 class="text-3xl md:text-5xl font-black text-white tracking-tight">Our services include</h3>
+                <p class="text-gray-400 mt-2 text-sm md:text-base font-light">Comprehensive corporate capabilities visible at a glance.</p>
+            </div>
             
-            <div class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 items-stretch reveal auto-scroll-track">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-2 reveal">
                 
-                <div class="glass-card p-5 md:p-8 rounded-2xl md:rounded-3xl group hover:border-pink-500/50 flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="calendar-check" class="text-pink-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Event Logistics</h4></div>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">No more worrying about all the moving parts. Our team manages all the aspects of event logistics, from timeline management to onsite setup. We anticipate challenges before they happen.</p>
-                </div>
-                
-                <div class="glass-card p-5 md:p-8 rounded-2xl md:rounded-3xl group hover:border-purple-500/50 flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="calculator" class="text-purple-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Budgeting</h4></div>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">Set your event goals and budget in confidence. We help clients build clear, flexible budgets that align with their goals, identifying cost-saving opportunities without compromising quality.</p>
-                </div>
-                
-                <div class="glass-card p-5 md:p-8 rounded-2xl md:rounded-3xl group hover:border-blue-500/50 flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="target" class="text-blue-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Strategy Design</h4></div>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">Regardless of your event type, TCC will help you go from idea to reality. We work closely with you to understand your goals and design a strategic event from there.</p>
-                </div>
-                
-                <div class="glass-card p-5 md:p-8 rounded-2xl md:rounded-3xl group hover:border-green-500/50 flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="map-pin" class="text-green-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Site Selection</h4></div>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">Site selection is more than finding a fun property. It's about deeply understanding your goals, attendees, agenda and budget. TCC will help you discover and contract the ideal location.</p>
-                </div>
-                
-                <div class="glass-card p-5 md:p-8 rounded-2xl md:rounded-3xl group hover:border-yellow-500/50 flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="party-popper" class="text-yellow-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Entertainment</h4></div>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">From sophisticated receptions to high impact corporate events and bespoke social gatherings, we create seamless, memorable events that reflect your brand and exceed expectations.</p>
-                </div>
-                
-                <div class="glass-card p-5 md:p-8 rounded-2xl md:rounded-3xl group hover:border-orange-500/50 flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="utensils" class="text-orange-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Food & Beverage</h4></div>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">Our F&B management services ensure exceptional culinary quality with operational efficiency. We oversee menu planning, cost control, vendor co-ordination and service execution.</p>
-                </div>
-                
-                <div class="glass-card p-4 md:p-8 rounded-2xl md:rounded-3xl group hover:border-pink-500/50 lg:col-span-2 flex flex-col justify-between shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98] overflow-hidden">
-                    <div class="mb-4 md:mb-6">
-                        <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="palette" class="text-pink-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Branding, Printing & Signage</h4></div>
-                        <p class="text-sm text-gray-400 leading-relaxed font-light mb-4">We offer absolute creative production infrastructure including stage architectures, giant programmatic LED layouts, identity signages, custom motion graphics sequences, and branded attendee assets.</p>
+                <!-- Item 1 -->
+                <div class="group py-6 md:py-8 border-b border-white/10 hover:border-pink-500/50 transition-colors flex gap-5 md:gap-6 items-start">
+                    <div class="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-pink-500/10 group-hover:scale-105 transition-all duration-300">
+                        <i data-lucide="calendar-check" class="text-pink-500 w-6 h-6 md:w-7 md:h-7"></i>
                     </div>
-                    <div class="rounded-xl overflow-hidden border border-white/5 aspect-video w-full md:max-h-[260px] bg-slate-900 mt-auto">
-                        <img src="img4.png" alt="TCC Technical Stage Production Execution" class="w-full h-full object-cover img-reveal">
+                    <div>
+                        <h4 class="text-lg md:text-xl font-bold text-white mb-2 tracking-tight group-hover:text-pink-400 transition-colors">Event Logistics</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed font-light">No more worrying about all the moving parts. Our team manages all the aspects of event logistics, from timeline management to onsite setup. We anticipate challenges before they happen.</p>
                     </div>
                 </div>
 
-                <div class="glass-card p-5 md:p-8 rounded-2xl md:rounded-3xl group hover:border-purple-500/50 flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="gift" class="text-purple-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Corporate Swag</h4></div>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">Spoil your guests and reinforce your brand with gifting that goes beyond standard items. We help source customized branded attire, awards, trophies and plaques that truly delight.</p>
+                <!-- Item 2 -->
+                <div class="group py-6 md:py-8 border-b border-white/10 hover:border-purple-500/50 transition-colors flex gap-5 md:gap-6 items-start">
+                    <div class="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-purple-500/10 group-hover:scale-105 transition-all duration-300">
+                        <i data-lucide="calculator" class="text-purple-500 w-6 h-6 md:w-7 md:h-7"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-bold text-white mb-2 tracking-tight group-hover:text-purple-400 transition-colors">Budgeting</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed font-light">Set your event goals and budget in confidence. We help clients build clear, flexible budgets that align with their goals, identifying cost-saving opportunities without compromising quality.</p>
+                    </div>
                 </div>
-                
-                <div class="glass-card p-5 md:p-8 rounded-2xl md:rounded-3xl group hover:border-blue-500/50 flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="mic" class="text-blue-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Speaker Mgmt</h4></div>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">When speakers share their participation, they amplify your event's visibility. We connect you with professionals from diverse fields to generate excitement and credibility.</p>
+
+                <!-- Item 3 -->
+                <div class="group py-6 md:py-8 border-b border-white/10 hover:border-blue-500/50 transition-colors flex gap-5 md:gap-6 items-start">
+                    <div class="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-blue-500/10 group-hover:scale-105 transition-all duration-300">
+                        <i data-lucide="target" class="text-blue-500 w-6 h-6 md:w-7 md:h-7"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-bold text-white mb-2 tracking-tight group-hover:text-blue-400 transition-colors">Strategy Design</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed font-light">Regardless of your event type, TCC will help you go from idea to reality. We work closely with you to understand your goals and design a strategic event from there.</p>
+                    </div>
                 </div>
-                
-                <div class="glass-card p-5 md:p-8 rounded-2xl md:rounded-3xl group hover:border-green-500/50 flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="users" class="text-green-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Vendor Management</h4></div>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">We work with a wide range of vendors, creating greater value for your events. We secure dependable vendors for decor, catering, and technical support to consistently deliver high-quality results.</p>
+
+                <!-- Item 4 -->
+                <div class="group py-6 md:py-8 border-b border-white/10 hover:border-green-500/50 transition-colors flex gap-5 md:gap-6 items-start">
+                    <div class="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-green-500/10 group-hover:scale-105 transition-all duration-300">
+                        <i data-lucide="map-pin" class="text-green-500 w-6 h-6 md:w-7 md:h-7"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-bold text-white mb-2 tracking-tight group-hover:text-green-400 transition-colors">Site Selection</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed font-light">Site selection is more than finding a fun property. It's about deeply understanding your goals, attendees, agenda and budget. TCC will help you discover and contract the ideal location.</p>
+                    </div>
                 </div>
-                
-                <div class="glass-card p-5 md:p-8 rounded-2xl md:rounded-3xl group hover:border-yellow-500/50 lg:col-span-2 flex flex-col shrink-0 w-[85vw] snap-center md:w-auto active:scale-[0.98]">
-                    <div class="flex items-center space-x-3 mb-3 md:mb-4"><i data-lucide="truck" class="text-yellow-500 w-5 h-5 md:w-6 md:h-6"></i><h4 class="text-lg md:text-xl font-bold text-white tracking-tight">Logistics (On & Off-Site)</h4></div>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">Detailed coordination of transport, equipment, A/V, vendor flow and set up while maintaining strict planning behind the scenes. We deliver an organized operational flow.</p>
+
+                <!-- Item 5 -->
+                <div class="group py-6 md:py-8 border-b border-white/10 hover:border-yellow-500/50 transition-colors flex gap-5 md:gap-6 items-start">
+                    <div class="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-yellow-500/10 group-hover:scale-105 transition-all duration-300">
+                        <i data-lucide="party-popper" class="text-yellow-500 w-6 h-6 md:w-7 md:h-7"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-bold text-white mb-2 tracking-tight group-hover:text-yellow-400 transition-colors">Entertainment</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed font-light">From sophisticated receptions to high impact corporate events and bespoke social gatherings, we create seamless, memorable events that reflect your brand and exceed expectations.</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="flex justify-center md:hidden mt-6 mb-2">
-                <div class="flex items-center gap-2 bg-white/10 border border-white/20 px-5 py-2.5 rounded-full text-white text-xs font-semibold animate-pulse shadow-[0_0_15px_rgba(255,255,255,0.1)] backdrop-blur-sm">
-                    <i data-lucide="move-horizontal" class="w-4 h-4"></i> Swipe to Explore
+
+                <!-- Item 6 -->
+                <div class="group py-6 md:py-8 border-b border-white/10 hover:border-orange-500/50 transition-colors flex gap-5 md:gap-6 items-start">
+                    <div class="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-orange-500/10 group-hover:scale-105 transition-all duration-300">
+                        <i data-lucide="utensils" class="text-orange-500 w-6 h-6 md:w-7 md:h-7"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-bold text-white mb-2 tracking-tight group-hover:text-orange-400 transition-colors">Food & Beverage</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed font-light">Our F&B management services ensure exceptional culinary quality with operational efficiency. We oversee menu planning, cost control, vendor co-ordination and service execution.</p>
+                    </div>
                 </div>
+
+                <!-- Item 7 -->
+                <div class="group py-6 md:py-8 border-b border-white/10 hover:border-purple-500/50 transition-colors flex gap-5 md:gap-6 items-start">
+                    <div class="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-purple-500/10 group-hover:scale-105 transition-all duration-300">
+                        <i data-lucide="gift" class="text-purple-500 w-6 h-6 md:w-7 md:h-7"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-bold text-white mb-2 tracking-tight group-hover:text-purple-400 transition-colors">Corporate Swag</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed font-light">Spoil your guests and reinforce your brand with gifting that goes beyond standard items. We help source customized branded attire, awards, trophies and plaques.</p>
+                    </div>
+                </div>
+
+                <!-- Item 8 -->
+                <div class="group py-6 md:py-8 border-b border-white/10 hover:border-blue-500/50 transition-colors flex gap-5 md:gap-6 items-start">
+                    <div class="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-blue-500/10 group-hover:scale-105 transition-all duration-300">
+                        <i data-lucide="mic" class="text-blue-500 w-6 h-6 md:w-7 md:h-7"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-bold text-white mb-2 tracking-tight group-hover:text-blue-400 transition-colors">Speaker Mgmt</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed font-light">When speakers share their participation, they amplify your event's visibility. We connect you with professionals from diverse fields to generate excitement and credibility.</p>
+                    </div>
+                </div>
+
+                <!-- Item 9 -->
+                <div class="group py-6 md:py-8 border-b border-white/10 hover:border-green-500/50 transition-colors flex gap-5 md:gap-6 items-start">
+                    <div class="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-green-500/10 group-hover:scale-105 transition-all duration-300">
+                        <i data-lucide="users" class="text-green-500 w-6 h-6 md:w-7 md:h-7"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-bold text-white mb-2 tracking-tight group-hover:text-green-400 transition-colors">Vendor Management</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed font-light">We work with a wide range of vendors, securing dependable partners for decor, catering, and technical support to consistently deliver high-quality results.</p>
+                    </div>
+                </div>
+
+                <!-- Item 10 -->
+                <div class="group py-6 md:py-8 border-b border-white/10 hover:border-yellow-500/50 transition-colors flex gap-5 md:gap-6 items-start">
+                    <div class="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-yellow-500/10 group-hover:scale-105 transition-all duration-300">
+                        <i data-lucide="truck" class="text-yellow-500 w-6 h-6 md:w-7 md:h-7"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-bold text-white mb-2 tracking-tight group-hover:text-yellow-400 transition-colors">Logistics (On & Off-Site)</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed font-light">Detailed coordination of transport, equipment, A/V, vendor flow and set up while maintaining strict planning behind the scenes. We deliver an organized operational flow.</p>
+                    </div>
+                </div>
+
+                <!-- Spanning Layout for Branding/Technical Capability Section -->
+                <div class="group py-6 md:py-8 border-b border-white/10 hover:border-pink-500/50 transition-colors flex gap-5 md:gap-6 items-start lg:col-span-2">
+                    <div class="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-pink-500/10 group-hover:scale-105 transition-all duration-300">
+                        <i data-lucide="palette" class="text-pink-500 w-6 h-6 md:w-7 md:h-7"></i>
+                    </div>
+                    <div class="flex-1 flex flex-col md:flex-row gap-6 md:items-center">
+                        <div class="flex-1">
+                            <h4 class="text-lg md:text-xl font-bold text-white mb-2 tracking-tight group-hover:text-pink-400 transition-colors">Branding, Printing & Signage</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed font-light">We offer absolute creative production infrastructure including stage architectures, giant programmatic LED layouts, identity signages, custom motion graphics sequences, and branded attendee assets.</p>
+                        </div>
+                        <div class="w-full md:w-1/3 rounded-xl overflow-hidden border border-white/5 aspect-video bg-slate-900 shrink-0">
+                            <img src="img4.png" alt="TCC Technical Stage Production Execution" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
+    <!-- Capabilities Matrix Section -->
     <section class="py-16 md:py-24 px-4 md:px-6 bg-[#080808] border-t border-white/5 relative">
         <div class="max-w-7xl mx-auto">
             <div class="mb-10 md:mb-16 text-center reveal">
                 <h3 class="text-2xl sm:text-3xl md:text-5xl font-black text-white tracking-tight uppercase logo-gradient inline-block">You Ideate, We Create, And Elevate</h3>
             </div>
             
-            <div class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-x-8 md:gap-y-10 mb-16 md:mb-20 pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 items-stretch reveal auto-scroll-track">
-                <div class="glass-card md:glass-none md:bg-transparent md:border-none md:backdrop-filter-none p-5 md:p-0 rounded-2xl md:rounded-none shrink-0 w-[70vw] snap-center md:w-auto border-l-2 md:border-l-2 border-pink-500 md:pl-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 mb-16 md:mb-20 reveal">
+                <div class="border-l-2 border-pink-500 pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Incentive Travel</h4>
                     <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Curated incentive travel programs designed to reward, inspire and motivate your teams.</p>
                 </div>
-                <div class="glass-card md:glass-none md:bg-transparent md:border-none md:backdrop-filter-none p-5 md:p-0 rounded-2xl md:rounded-none shrink-0 w-[70vw] snap-center md:w-auto border-l-2 md:border-l-2 border-purple-500 md:pl-4">
+                <div class="border-l-2 border-purple-500 pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Sales Meets</h4>
                     <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">High-impact sales conferences focused on alignment, performance and growth.</p>
                 </div>
-                <div class="glass-card md:glass-none md:bg-transparent md:border-none md:backdrop-filter-none p-5 md:p-0 rounded-2xl md:rounded-none shrink-0 w-[70vw] snap-center md:w-auto border-l-2 md:border-l-2 border-blue-500 md:pl-4">
+                <div class="border-l-2 border-blue-500 pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Product Launches</h4>
                     <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Strategic product unveilings that generate visibility, engagement and market buzz.</p>
                 </div>
-                <div class="glass-card md:glass-none md:bg-transparent md:border-none md:backdrop-filter-none p-5 md:p-0 rounded-2xl md:rounded-none shrink-0 w-[70vw] snap-center md:w-auto border-l-2 md:border-l-2 border-green-500 md:pl-4">
+                <div class="border-l-2 border-green-500 pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Conferences</h4>
                     <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">End-to-end planning and execution for large-scale and multi-day conferences.</p>
                 </div>
-                <div class="glass-card md:glass-none md:bg-transparent md:border-none md:backdrop-filter-none p-5 md:p-0 rounded-2xl md:rounded-none shrink-0 w-[70vw] snap-center md:w-auto border-l-2 md:border-l-2 border-yellow-500 md:pl-4">
+                <div class="border-l-2 border-yellow-500 pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Corporate Meetings</h4>
                     <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Professional meetings delivered with seamless coordination and precision.</p>
                 </div>
-                <div class="glass-card md:glass-none md:bg-transparent md:border-none md:backdrop-filter-none p-5 md:p-0 rounded-2xl md:rounded-none shrink-0 w-[70vw] snap-center md:w-auto border-l-2 md:border-l-2 border-orange-500 md:pl-4">
+                <div class="border-l-2 border-orange-500 pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Hybrid Events</h4>
                     <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Integrated physical and virtual experiences for wider reach and engagement.</p>
                 </div>
-                <div class="glass-card md:glass-none md:bg-transparent md:border-none md:backdrop-filter-none p-5 md:p-0 rounded-2xl md:rounded-none shrink-0 w-[70vw] snap-center md:w-auto border-l-2 md:border-l-2 border-pink-500 md:pl-4">
+                <div class="border-l-2 border-pink-500 pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Personal Events</h4>
                     <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Thoughtfully planned private celebrations with personalised execution.</p>
                 </div>
-                <div class="glass-card md:glass-none md:bg-transparent md:border-none md:backdrop-filter-none p-5 md:p-0 rounded-2xl md:rounded-none shrink-0 w-[70vw] snap-center md:w-auto border-l-2 md:border-l-2 border-purple-500 md:pl-4">
+                <div class="border-l-2 border-purple-500 pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">Celebrations</h4>
                     <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Festive corporate and milestone events crafted to create memorable moments.</p>
                 </div>
-                <div class="glass-card md:glass-none md:bg-transparent md:border-none md:backdrop-filter-none p-5 md:p-0 rounded-2xl md:rounded-none shrink-0 w-[70vw] snap-center md:w-auto border-l-2 md:border-l-2 border-blue-500 md:pl-4">
+                <div class="border-l-2 border-blue-500 pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">TLB</h4>
                     <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">For diverse and dispersed group needs.</p>
                 </div>
             </div>
 
-            <div class="flex justify-center md:hidden mt-2 mb-10">
-                <div class="flex items-center gap-2 bg-white/10 border border-white/20 px-5 py-2.5 rounded-full text-white text-xs font-semibold animate-pulse shadow-[0_0_15px_rgba(255,255,255,0.1)] backdrop-blur-sm">
-                    <i data-lucide="move-horizontal" class="w-4 h-4"></i> Swipe to Explore
-                </div>
-            </div>
-
+            <!-- Case Study Gallery (Transformed into Balanced 2-Column Vertical Flow) -->
             <div class="reveal">
-                <div class="mb-4 md:mb-6 text-center md:text-left">
+                <div class="mb-6 md:mb-8 text-center md:text-left">
                     <h4 class="text-[10px] md:text-xs font-bold uppercase text-pink-500 tracking-widest">Case Study Backdrop</h4>
                     <h5 class="text-lg md:text-2xl font-bold text-white mt-1">International Operations Spotlight — Bali</h5>
                 </div>
-                <div class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 md:grid md:grid-cols-2 md:gap-6 pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 items-stretch auto-scroll-track">
-                    <div class="glass-card p-2 md:p-3 rounded-2xl flex flex-col h-full shrink-0 w-[85vw] snap-center md:w-auto overflow-hidden active:scale-[0.98]">
-                        <div class="overflow-hidden rounded-xl aspect-[4/3]"><img src="img3.png" alt="Garuda Wisnu Kencana Welcome, Bali" class="w-full h-full object-cover img-reveal"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                    <div class="glass-card p-2 md:p-3 rounded-2xl flex flex-col h-full overflow-hidden">
+                        <div class="overflow-hidden rounded-xl aspect-[4/3]"><img src="img3.png" alt="Garuda Wisnu Kencana Welcome, Bali" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"></div>
                         <p class="text-[10px] md:text-xs text-gray-400 font-medium mt-3 px-1 pb-2">Garuda Wisnu Kencana Cultural Arena Execution — Corporate Program Cohort</p>
                     </div>
-                    <div class="glass-card p-2 md:p-3 rounded-2xl flex flex-col h-full shrink-0 w-[85vw] snap-center md:w-auto overflow-hidden active:scale-[0.98]">
-                        <div class="overflow-hidden rounded-xl aspect-[4/3]"><img src="img5.jpeg" alt="Pura Luhur Uluwatu Destination Excursion, Bali" class="w-full h-full object-cover img-reveal"></div>
+                    <div class="glass-card p-2 md:p-3 rounded-2xl flex flex-col h-full overflow-hidden">
+                        <div class="overflow-hidden rounded-xl aspect-[4/3]"><img src="img5.jpeg" alt="Pura Luhur Uluwatu Destination Excursion, Bali" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"></div>
                         <p class="text-[10px] md:text-xs text-gray-400 font-medium mt-3 px-1 pb-2">Pura Luhur Uluwatu Historic Landmark Excursion — Operational Crew Deployment</p>
-                    </div>
-                </div>
-                
-                <div class="flex justify-center md:hidden mt-6 mb-2">
-                    <div class="flex items-center gap-2 bg-white/10 border border-white/20 px-5 py-2.5 rounded-full text-white text-xs font-semibold animate-pulse shadow-[0_0_15px_rgba(255,255,255,0.1)] backdrop-blur-sm">
-                        <i data-lucide="move-horizontal" class="w-4 h-4"></i> Swipe Gallery
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Connect / Multi-Step Inquiry Form Section -->
     <section id="connect" class="py-16 md:py-32 px-4 md:px-6 relative overflow-hidden border-t border-white/5 mb-16 lg:mb-0">
         <div class="ambient-blob bg-purple-600 w-[300px] h-[300px] md:w-[600px] md:h-[600px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-10"></div>
         
@@ -443,12 +498,43 @@
         </div>
     </section>
 
-    <footer class="py-6 md:py-8 pb-28 lg:pb-8 text-center text-gray-600 text-[10px] md:text-xs border-t border-white/5 bg-[#050505] tracking-wide"><p>© 2026 The Conference Crew Mumbai. All Rights Reserved.</p></footer>
+    <!-- Footer -->
+    <footer class="py-6 md:py-8 pb-28 lg:pb-8 text-center text-gray-600 text-[10px] md:text-xs border-t border-white/5 bg-[#050505] tracking-wide">
+        <p>© 2026 The Conference Crew Mumbai. All Rights Reserved.</p>
+    </footer>
 
     <script>
         lucide.createIcons();
-        window.addEventListener('scroll', () => { const nav = document.getElementById('navbar'); if (window.scrollY > 20) { nav.classList.add('bg-[#050505]/95', 'backdrop-blur-md', 'border-white/5', 'py-2', 'md:py-3'); nav.classList.remove('border-transparent', 'py-3', 'md:py-5'); } else { nav.classList.remove('bg-[#050505]/95', 'backdrop-blur-md', 'border-white/5', 'py-2', 'md:py-3'); nav.classList.add('border-transparent', 'py-3', 'md:py-5'); } });
         
+        // Sticky Header Backdrop Interaction
+        window.addEventListener('scroll', () => { 
+            const nav = document.getElementById('navbar'); 
+            if (window.scrollY > 20) { 
+                nav.classList.add('bg-[#050505]/95', 'backdrop-blur-md', 'border-white/5', 'py-2', 'md:py-3'); 
+                nav.classList.remove('border-transparent', 'py-3', 'md:py-5'); 
+            } else { 
+                nav.classList.remove('bg-[#050505]/95', 'backdrop-blur-md', 'border-white/5', 'py-2', 'md:py-3'); 
+                nav.classList.add('border-transparent', 'py-3', 'md:py-5'); 
+            } 
+        });
+        
+        // Mobile Navigation Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+            const isOpen = menu.classList.contains('open');
+            
+            if (isOpen) {
+                menu.classList.remove('open');
+                icon.setAttribute('data-lucide', 'menu');
+            } else {
+                menu.classList.add('open');
+                icon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons();
+        }
+
+        // Viewport Intersection Animator
         function reveal() { 
             var reveals = document.querySelectorAll(".reveal"); 
             for (var i = 0; i < reveals.length; i++) { 
@@ -459,6 +545,7 @@
         }
         window.addEventListener("scroll", reveal); reveal(); 
         
+        // Content Clamp Toggle
         function toggleReadMore() {
             const textContainer = document.getElementById('about-text');
             const fade = document.getElementById('about-fade');
@@ -478,37 +565,37 @@
             lucide.createIcons();
         }
 
-        // FIX: Intelligent Auto-Scroll Mechanics for Mobile Carousels
-        const tracks = document.querySelectorAll('.auto-scroll-track');
-        tracks.forEach(track => {
-            let isTouching = false;
-            
-            // Detect interaction to pause the scroll
-            track.addEventListener('touchstart', () => isTouching = true, {passive: true});
-            track.addEventListener('touchend', () => { setTimeout(() => isTouching = false, 2500); });
-            track.addEventListener('mouseenter', () => isTouching = true);
-            track.addEventListener('mouseleave', () => isTouching = false);
-
-            // Auto-advance logic (Runs every 3.5 seconds)
-            setInterval(() => {
-                // Only run on mobile where the track exists as a scrollable container
-                if(!isTouching && window.innerWidth < 768) { 
-                    const cardWidth = track.clientWidth * 0.85; // Move exactly one card width
-                    
-                    if(track.scrollLeft + track.clientWidth >= track.scrollWidth - 20) {
-                        track.scrollTo({ left: 0, behavior: 'smooth' }); // Reset to start
-                    } else {
-                        track.scrollBy({ left: cardWidth, behavior: 'smooth' }); // Advance right
-                    }
-                }
-            }, 3500);
-        });
-
+        // Multi-Step Multi-Engine Form Controls
         let step = 1;
-        function updateForm() { document.querySelectorAll('.form-step').forEach((el, index) => { if (index + 1 === step) { el.classList.remove('form-hidden'); el.classList.add('form-active'); } else { el.classList.remove('form-active'); el.classList.add('form-hidden'); } }); document.getElementById('progressBar').style.width = (step / 3) * 100 + '%'; document.getElementById('btnBack').style.visibility = step > 1 ? 'visible' : 'hidden'; if (step === 3) { document.getElementById('btnNext').classList.add('hidden'); document.getElementById('btnSubmit').classList.remove('hidden'); } else { document.getElementById('btnNext').classList.remove('hidden'); document.getElementById('btnSubmit').classList.add('hidden'); } }
+        function updateForm() { 
+            document.querySelectorAll('.form-step').forEach((el, index) => { 
+                if (index + 1 === step) { 
+                    el.classList.remove('form-hidden'); el.classList.add('form-active'); 
+                } else { 
+                    el.classList.remove('form-active'); el.classList.add('form-hidden'); 
+                } 
+            }); 
+            document.getElementById('progressBar').style.width = (step / 3) * 100 + '%'; 
+            document.getElementById('btnBack').style.visibility = step > 1 ? 'visible' : 'hidden'; 
+            if (step === 3) { 
+                document.getElementById('btnNext').classList.add('hidden'); 
+                document.getElementById('btnSubmit').classList.remove('hidden'); 
+            } else { 
+                document.getElementById('btnNext').classList.remove('hidden'); 
+                document.getElementById('btnSubmit').classList.add('hidden'); 
+            } 
+        }
         function nextStep() { if (step < 3) { step++; updateForm(); } }
         function prevStep() { if (step > 1) { step--; updateForm(); } }
-        function submitForm(e) { e.preventDefault(); document.getElementById('contactForm').style.display = 'none'; document.getElementById('successState').classList.remove('form-hidden'); document.getElementById('successState').classList.add('form-active'); document.getElementById('progressBar').style.width = '100%'; document.getElementById('progressBar').classList.replace('from-pink-500', 'from-green-500'); document.getElementById('progressBar').classList.replace('to-blue-500', 'to-green-400'); }
+        function submitForm(e) { 
+            e.preventDefault(); 
+            document.getElementById('contactForm').style.display = 'none'; 
+            document.getElementById('successState').classList.remove('form-hidden'); 
+            document.getElementById('successState').classList.add('form-active'); 
+            document.getElementById('progressBar').style.width = '100%'; 
+            document.getElementById('progressBar').classList.replace('from-pink-500', 'from-green-500'); 
+            document.getElementById('progressBar').classList.replace('to-blue-500', 'to-green-400'); 
+        }
     </script>
 </body>
 </html>
