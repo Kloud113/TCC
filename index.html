@@ -2,18 +2,18 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Conference Crew | Flawless Events</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
+        /* Strict overflow control to prevent horizontal swipe jiggle */
         html, body {
-            max-width: 100vw;
+            width: 100%;
             overflow-x: hidden;
             background-color: #050505; 
             color: #ffffff; 
@@ -21,16 +21,29 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
         }
 
+        /* Performance optimized ambient blobs */
         .ambient-blob {
             position: absolute;
             border-radius: 50%;
-            filter: blur(120px);
+            filter: blur(100px);
             z-index: -1;
-            opacity: 0.12;
+            opacity: 0.15;
+            transform: translateZ(0); /* Force Hardware Acceleration */
             will-change: transform;
             animation: float 12s ease-in-out infinite alternate;
+        }
+
+        /* Mobile specific optimizations */
+        @media (max-width: 768px) {
+            .ambient-blob {
+                filter: blur(60px); 
+                opacity: 0.1;
+                animation: none; /* Disable heavy animation on mobile for speed */
+            }
         }
 
         .glass-card {
@@ -62,7 +75,6 @@
             50% { box-shadow: 0 0 25px rgba(250,204,21,0.6); }
         }
 
-        /* Form Logic Classes */
         .form-step { transition: opacity 0.3s ease, transform 0.3s ease; width: 100%; }
         .form-hidden { opacity: 0; transform: translateX(15px); pointer-events: none; position: absolute; width: 100%; visibility: hidden; }
         .form-active { opacity: 1; transform: translateX(0); position: relative; width: 100%; visibility: visible; }
@@ -76,9 +88,9 @@
         
         input:focus, select:focus, textarea:focus {
             background: rgba(255, 255, 255, 0.06);
-            border-color: #facc15;
+            border-color: #fbc121;
             outline: none;
-            box-shadow: 0 0 15px rgba(250, 204, 21, 0.2);
+            box-shadow: 0 0 15px rgba(251, 193, 33, 0.2);
         }
         
         option { background: #1a1a1a; color: white; }
@@ -93,14 +105,16 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body class="selection:bg-yellow-400 selection:text-black">
+<body class="selection:bg-[#fbc121] selection:text-black relative">
 
+    <!-- Mobile Sticky CTA -->
     <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] lg:hidden w-[90%] max-w-sm pointer-events-none flex justify-center">
-        <a href="#connect" class="pointer-events-auto flex items-center justify-center w-full bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-600 text-black px-6 py-4 rounded-full font-bold text-base shadow-[0_10px_40px_rgba(250,204,21,0.4)] active:scale-95 transition-all backdrop-blur-md border border-white/10" aria-label="Plan your event">
+        <a href="#connect" class="pointer-events-auto flex items-center justify-center w-full bg-[#fbc121] text-black px-6 py-4 rounded-full font-bold text-base shadow-[0_10px_30px_rgba(251,193,33,0.3)] active:scale-95 transition-all backdrop-blur-md border border-white/10" aria-label="Plan your event">
             Plan Your Event <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
         </a>
     </div>
 
+    <!-- Navigation -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-3 md:py-5 border-b border-transparent">
         <div class="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center w-full">
             <a href="#home" class="flex items-center group animate-hero-1 active:scale-95 transition-transform" aria-label="Home">
@@ -112,7 +126,7 @@
                 <a href="#why-tcc" class="hover:text-[#fbc121] transition-colors">About</a>
                 <a href="#services" class="hover:text-[#fbc121] transition-colors">What We Do</a>
                 <div class="flex items-center space-x-4 pl-4 border-l border-white/10">
-                    <a href="#connect" class="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-6 py-2.5 rounded-full hover:scale-105 hover:shadow-[0_0_20px_rgba(250,204,21,0.4)] active:scale-95 transition-all duration-300 font-bold">Plan Event</a>
+                    <a href="#connect" class="bg-[#fbc121] text-black px-6 py-2.5 rounded-full hover:scale-105 hover:shadow-[0_0_20px_rgba(251,193,33,0.4)] active:scale-95 transition-all duration-300 font-bold">Plan Event</a>
                 </div>
             </div>
 
@@ -122,42 +136,43 @@
         </div>
     </nav>
 
+    <!-- Mobile Menu -->
     <div id="mobileMenu" class="fixed inset-0 bg-[#050505]/98 backdrop-blur-xl z-40 opacity-0 pointer-events-none transform scale-95 transition-all duration-300 ease-out flex flex-col justify-center px-6 lg:hidden">
         <div class="flex flex-col space-y-6 text-2xl font-bold tracking-tight">
             <a href="#home" class="mobile-nav-link text-white hover:text-[#fbc121] transition-colors">01 / Home</a>
             <a href="#why-tcc" class="mobile-nav-link text-white hover:text-[#fbc121] transition-colors">02 / About</a>
             <a href="#services" class="mobile-nav-link text-white hover:text-[#fbc121] transition-colors">03 / What We Do</a>
-            <a href="#connect" class="mobile-nav-link inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-center py-4 rounded-xl text-lg font-bold tracking-normal">Plan Your Event</a>
+            <a href="#connect" class="mobile-nav-link inline-block bg-[#fbc121] text-black text-center py-4 rounded-xl text-lg font-bold tracking-normal">Plan Your Event</a>
         </div>
     </div>
 
     <!-- Hero Section -->
     <section id="home" class="relative min-h-[75vh] lg:min-h-screen flex items-center justify-center px-4 md:px-6 overflow-hidden pt-24 md:pt-20">
         <div class="ambient-blob bg-yellow-500 w-[300px] h-[300px] md:w-[500px] md:h-[500px] top-[0%] left-[-10%]"></div>
-        <div class="ambient-blob bg-pink-600 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bottom-[-20%] right-[-10%]" style="animation-delay: -5s;"></div>
+        <div class="ambient-blob bg-pink-600 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bottom-[-20%] right-[-10%]"></div>
 
         <div class="max-w-7xl mx-auto text-center relative z-10 w-full overflow-visible">
             <div class="animate-hero-2 w-full flex justify-center">
-                <h1 class="font-black tracking-tighter leading-[1.05] mb-4 md:mb-6 text-[#fbc121] whitespace-nowrap text-[8vw] md:text-[6vw] lg:text-[5.5rem] xl:text-[6rem]">
+                <h1 class="font-black tracking-tighter leading-tight text-[#fbc121] whitespace-nowrap text-[7.5vw] sm:text-[6vw] lg:text-[5.5rem] xl:text-[6.5rem]">
                     The Conference Crew
                 </h1>
             </div>
-            <p class="text-xl md:text-3xl text-white mb-8 md:mb-12 font-light tracking-wide animate-hero-3 px-4">
+            <p class="text-xl md:text-3xl text-white mt-2 mb-8 md:mb-12 font-light tracking-wide animate-hero-3 px-4">
                 Flawless events, from concept to closing.
             </p>
             <div class="flex items-center justify-center animate-hero-4">
-                <a href="#services" class="flex items-center justify-center space-x-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-8 py-3 md:px-8 md:py-4 rounded-full font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_25px_rgba(250,204,21,0.25)] text-base md:text-lg">
-                    Explore Our Services
+                <a href="#services" class="flex items-center justify-center space-x-2 bg-[#fbc121] text-black px-8 py-3 md:px-8 md:py-4 rounded-full font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_25px_rgba(251,193,33,0.25)] text-base md:text-lg">
+                    <span>Explore Our Services</span>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Real Partnership For Real Results! Section (From Code 1, replacing previous Code 2 About section) -->
-    <section id="why-tcc" class="py-16 md:py-24 px-4 md:px-6 relative z-10 bg-[#080808]">
+    <!-- About Section -->
+    <section id="why-tcc" class="py-16 md:py-24 px-4 md:px-6 relative z-10 bg-[#080808] border-t border-white/5">
         <div class="max-w-7xl mx-auto">
             <div class="mb-12 md:mb-16 text-center reveal">
-                <h3 class="text-3xl md:text-5xl font-black text-[#fbc121] tracking-tight inline-block">Real Partnership For Real Results!</h3>
+                <h3 class="text-3xl md:text-5xl font-black text-[#fbc121] tracking-tight inline-block uppercase">Real Partnership For Real Results!</h3>
             </div>
             
             <div class="mb-16 md:mb-24 flex flex-col justify-center space-y-10 max-w-4xl mx-auto">
@@ -181,7 +196,6 @@
                 </div>
             </div>
             
-            <!-- Value Prop Index -->
             <div class="mb-8 md:mb-12 reveal text-center">
                 <h3 class="text-2xl md:text-4xl font-black text-[#fbc121] tracking-tight uppercase">Here's what it looks like in practice</h3>
             </div>
@@ -204,10 +218,10 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-12 md:py-20 px-4 md:px-6 relative">
-        <div class="ambient-blob bg-yellow-500 w-[300px] h-[300px] top-[20%] right-[-10%] opacity-10"></div>
+    <section id="services" class="py-12 md:py-20 px-4 md:px-6 relative overflow-hidden">
+        <div class="ambient-blob bg-[#fbc121] w-[300px] h-[300px] top-[20%] right-[-10%] opacity-10"></div>
         
-        <div class="max-w-7xl mx-auto">
+        <div class="max-w-7xl mx-auto relative z-10">
             <div class="mb-12 md:mb-16 reveal text-center">
                 <h3 class="text-3xl md:text-5xl font-black tracking-tight uppercase text-[#fbc121] inline-block">Our Services Include</h3>
                 <p class="text-white mt-3 text-base md:text-xl font-light">Comprehensive corporate capabilities visible at a glance.</p>
@@ -327,47 +341,48 @@
         </div>
     </section>
 
-    <!-- Capabilities Section -->
-    <section class="py-12 md:py-20 px-4 md:px-6 bg-[#080808] border-t border-white/5 relative">
+    <!-- Capabilities Section (Reverted to Yellow & Centered) -->
+    <section class="py-16 md:py-24 px-4 md:px-6 bg-[#080808] border-t border-white/5 relative overflow-hidden">
         <div class="max-w-7xl mx-auto">
+            
             <div class="mb-10 md:mb-14 text-center reveal">
-                <h3 class="text-3xl md:text-5xl font-black tracking-tight uppercase text-[#fbc121] inline-block">You Ideate, We Create, And Elevate</h3>
+                <h3 class="text-3xl md:text-5xl font-black tracking-tight uppercase text-[#fbc121] inline-block">You Ideate We Create & Elevate</h3>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8 mb-16 md:mb-20 reveal">
-                <div class="border-l-2 border-yellow-400 pl-4 py-1">
+                <div class="border-l-2 border-[#fbc121] pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-[#fbc121] mb-1 uppercase tracking-wide">Incentive Travel</h4>
                     <p class="text-base md:text-lg text-white font-light leading-relaxed">Curated incentive travel programs designed to reward, inspire and motivate your teams.</p>
                 </div>
-                <div class="border-l-2 border-orange-400 pl-4 py-1">
+                <div class="border-l-2 border-[#fbc121] pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-[#fbc121] mb-1 uppercase tracking-wide">Sales Meets</h4>
                     <p class="text-base md:text-lg text-white font-light leading-relaxed">High-impact sales conferences focused on alignment, performance and growth.</p>
                 </div>
-                <div class="border-l-2 border-pink-500 pl-4 py-1">
+                <div class="border-l-2 border-[#fbc121] pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-[#fbc121] mb-1 uppercase tracking-wide">Product Launches</h4>
                     <p class="text-base md:text-lg text-white font-light leading-relaxed">Strategic product unveilings that generate visibility, engagement and market buzz.</p>
                 </div>
-                <div class="border-l-2 border-purple-500 pl-4 py-1">
+                <div class="border-l-2 border-[#fbc121] pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-[#fbc121] mb-1 uppercase tracking-wide">Conferences</h4>
                     <p class="text-base md:text-lg text-white font-light leading-relaxed">End-to-end planning and execution for large-scale and multi-day conferences.</p>
                 </div>
-                <div class="border-l-2 border-yellow-400 pl-4 py-1">
+                <div class="border-l-2 border-[#fbc121] pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-[#fbc121] mb-1 uppercase tracking-wide">Corporate Meetings</h4>
                     <p class="text-base md:text-lg text-white font-light leading-relaxed">Professional meetings delivered with seamless coordination and precision.</p>
                 </div>
-                <div class="border-l-2 border-orange-400 pl-4 py-1">
+                <div class="border-l-2 border-[#fbc121] pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-[#fbc121] mb-1 uppercase tracking-wide">Hybrid Events</h4>
                     <p class="text-base md:text-lg text-white font-light leading-relaxed">Integrated physical and virtual experiences for wider reach and engagement.</p>
                 </div>
-                <div class="border-l-2 border-pink-500 pl-4 py-1">
+                <div class="border-l-2 border-[#fbc121] pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-[#fbc121] mb-1 uppercase tracking-wide">Personal Events</h4>
                     <p class="text-base md:text-lg text-white font-light leading-relaxed">Thoughtfully planned private celebrations with personalised execution.</p>
                 </div>
-                <div class="border-l-2 border-purple-500 pl-4 py-1">
+                <div class="border-l-2 border-[#fbc121] pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-[#fbc121] mb-1 uppercase tracking-wide">Celebrations</h4>
                     <p class="text-base md:text-lg text-white font-light leading-relaxed">Festive corporate and milestone events crafted to create memorable moments.</p>
                 </div>
-                <div class="border-l-2 border-yellow-400 pl-4 py-1">
+                <div class="border-l-2 border-[#fbc121] pl-4 py-1">
                     <h4 class="text-lg md:text-xl font-bold text-[#fbc121] mb-1 uppercase tracking-wide">TLB</h4>
                     <p class="text-base md:text-lg text-white font-light leading-relaxed">For diverse and dispersed group needs.</p>
                 </div>
@@ -379,16 +394,16 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                     <div class="glass-card p-2 md:p-3 rounded-2xl work-img-wrap aspect-[4/3]">
-                        <img src="img3.png" alt="TCC Event Work">
+                        <img src="img3.png" alt="TCC Event Work" loading="lazy" decoding="async">
                     </div>
                     <div class="glass-card p-2 md:p-3 rounded-2xl work-img-wrap aspect-[4/3]">
-                        <img src="img5.jpeg" alt="TCC Event Work">
+                        <img src="img5.jpeg" alt="TCC Event Work" loading="lazy" decoding="async">
                     </div>
                     <div class="glass-card p-2 md:p-3 rounded-2xl work-img-wrap aspect-[4/3]">
-                        <img src="img4.png" alt="TCC Event Work">
+                        <img src="img4.png" alt="TCC Event Work" loading="lazy" decoding="async">
                     </div>
                     <div class="glass-card p-2 md:p-3 rounded-2xl work-img-wrap aspect-[4/3]">
-                        <img src="img1.jpeg" alt="TCC Event Work">
+                        <img src="img1.jpeg" alt="TCC Event Work" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -397,10 +412,10 @@
 
     <!-- Connect Section -->
     <section id="connect" class="py-12 md:py-24 px-4 md:px-6 relative overflow-hidden border-t border-white/5 mb-16 lg:mb-0">
-        <div class="ambient-blob bg-yellow-500 w-[300px] h-[300px] md:w-[600px] md:h-[600px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-8"></div>
+        <div class="ambient-blob bg-[#fbc121] w-[300px] h-[300px] md:w-[600px] md:h-[600px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-10"></div>
         
         <div class="max-w-6xl mx-auto bg-[#0a0a0a] rounded-2xl md:rounded-[2rem] border border-white/10 shadow-2xl relative z-10 flex flex-col md:flex-row min-h-0 md:min-h-[500px] reveal overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 z-20"></div>
+            <div class="absolute top-0 left-0 w-full h-1 bg-[#fbc121] z-20"></div>
 
             <div class="md:w-5/12 p-6 md:p-12 bg-white/5 border-b md:border-b-0 md:border-r border-white/10 flex flex-col">
                 <div class="mb-auto">
@@ -410,23 +425,23 @@
                 
                 <div class="space-y-4 md:space-y-6 mt-4 md:mt-8">
                     <div class="bg-[rgba(255,255,255,0.02)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] p-4 md:p-5 rounded-2xl flex items-center space-x-4 active:scale-[0.98] transition-all">
-                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-yellow-500/20 flex shrink-0 items-center justify-center text-yellow-400"><i data-lucide="phone" class="w-4 h-4 md:w-5 md:h-5"></i></div>
-                        <div><p class="text-[10px] md:text-[11px] font-bold text-yellow-400 uppercase tracking-wider mb-0.5">Call Us</p><p class="text-base md:text-xl font-bold text-white tracking-tight">+91 93228 86886</p></div>
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-yellow-500/20 flex shrink-0 items-center justify-center text-[#fbc121]"><i data-lucide="phone" class="w-4 h-4 md:w-5 md:h-5"></i></div>
+                        <div><p class="text-[10px] md:text-[11px] font-bold text-[#fbc121] uppercase tracking-wider mb-0.5">Call Us</p><p class="text-base md:text-xl font-bold text-white tracking-tight">+91 93228 86886</p></div>
                     </div>
                     <div class="bg-[rgba(255,255,255,0.02)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] p-4 md:p-5 rounded-2xl flex items-center space-x-4 active:scale-[0.98] transition-all">
-                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-orange-500/20 flex shrink-0 items-center justify-center text-orange-400"><i data-lucide="mail" class="w-4 h-4 md:w-5 md:h-5"></i></div>
-                        <div><p class="text-[10px] md:text-[11px] font-bold text-orange-400 uppercase tracking-wider mb-0.5">Email</p><p class="text-sm md:text-lg font-bold text-white tracking-tight break-all">conferencecrew07@gmail.com</p></div>
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-yellow-500/20 flex shrink-0 items-center justify-center text-[#fbc121]"><i data-lucide="mail" class="w-4 h-4 md:w-5 md:h-5"></i></div>
+                        <div><p class="text-[10px] md:text-[11px] font-bold text-[#fbc121] uppercase tracking-wider mb-0.5">Email</p><p class="text-sm md:text-lg font-bold text-white tracking-tight break-all">conferencecrew07@gmail.com</p></div>
                     </div>
                 </div>
             </div>
 
             <div class="md:w-7/12 p-6 md:p-12 relative flex flex-col justify-between">
                 <div class="absolute top-0 md:top-1 left-0 w-full h-[2px] bg-white/5">
-                    <div id="progressBar" class="h-full bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 transition-all duration-500" style="width: 33%;"></div>
+                    <div id="progressBar" class="h-full bg-[#fbc121] transition-all duration-500" style="width: 33%;"></div>
                 </div>
                 
                 <div id="successState" class="form-hidden h-full flex flex-col items-center justify-center text-center py-10">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-yellow-400/10 text-yellow-400 rounded-full flex items-center justify-center mb-4"><i data-lucide="check" class="w-6 h-6 md:w-8 md:h-8"></i></div>
+                    <div class="w-12 h-12 md:w-16 md:h-16 bg-[#fbc121] text-black rounded-full flex items-center justify-center mb-4"><i data-lucide="check" class="w-6 h-6 md:w-8 md:h-8"></i></div>
                     <h3 class="text-xl md:text-2xl font-bold text-[#fbc121] mb-2">Enquiry Submitted</h3>
                     <p class="text-sm md:text-base text-white">Our event strategy crew will connect with you shortly.</p>
                 </div>
@@ -452,7 +467,7 @@
                             <h4 class="text-lg md:text-2xl font-bold text-[#fbc121] mb-4 md:mb-6 uppercase tracking-wide">Event Basics</h4>
                             <div class="space-y-3 md:space-y-4">
                                 <div class="relative w-full">
-                                    <select aria-label="Select Event Type" class="w-full px-4 py-3 md:px-5 md:py-4 rounded-xl appearance-none text-base bg-white/5 border border-white/10 text-white focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none transition-all cursor-pointer pr-12" required>
+                                    <select aria-label="Select Event Type" class="w-full px-4 py-3 md:px-5 md:py-4 rounded-xl appearance-none text-base bg-white/5 border border-white/10 text-white focus:border-[#fbc121] focus:ring-1 focus:ring-[#fbc121] outline-none transition-all cursor-pointer pr-12" required>
                                         <option value="" disabled selected>Select Event Type</option>
                                         <option value="Corporate">Corporate</option>
                                         <option value="Social">Social</option>
@@ -480,10 +495,10 @@
                         <button type="button" id="btnBack" class="text-white hover:text-[#fbc121] transition-colors invisible font-medium text-sm md:text-base flex items-center p-2">
                             <i data-lucide="arrow-left" class="w-4 h-4 mr-1"></i> Back
                         </button>
-                        <button type="button" id="btnNext" class="bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black px-6 py-2.5 md:px-8 md:py-3 rounded-full font-bold hover:scale-105 transition-all text-sm md:text-base shadow-[0_0_15px_rgba(250,204,21,0.3)] flex items-center pulsate">
+                        <button type="button" id="btnNext" class="bg-[#fbc121] text-black px-6 py-2.5 md:px-8 md:py-3 rounded-full font-bold hover:scale-105 transition-all text-sm md:text-base shadow-[0_0_15px_rgba(251,193,33,0.3)] flex items-center pulsate">
                             Next Step <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
                         </button>
-                        <button type="submit" id="btnSubmit" class="hidden bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black px-6 py-2.5 md:px-8 md:py-3 rounded-full font-bold hover:scale-105 transition-all text-sm md:text-base shadow-[0_0_15px_rgba(250,204,21,0.3)] flex items-center">
+                        <button type="submit" id="btnSubmit" class="hidden bg-[#fbc121] text-black px-6 py-2.5 md:px-8 md:py-3 rounded-full font-bold hover:scale-105 transition-all text-sm md:text-base shadow-[0_0_15px_rgba(251,193,33,0.3)] flex items-center">
                             Submit Enquiry <i data-lucide="check-circle-2" class="w-4 h-4 ml-2"></i>
                         </button>
                     </div>
@@ -496,11 +511,10 @@
         <p>© 2026 The Conference Crew Mumbai. All Rights Reserved.</p>
     </footer>
 
-    <script type="module">
-        // Initialize Icons
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
         lucide.createIcons();
         
-        // --- 1. DOM Elements ---
         const nav = document.getElementById('navbar');
         const mobileMenuBtn = document.getElementById('mobileMenuToggle');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -515,7 +529,6 @@
         const successState = document.getElementById('successState');
         const formSteps = document.querySelectorAll('.form-step');
         
-        // --- 2. Navigation State ---
         let isMenuOpen = false;
         
         const toggleMenu = () => {
@@ -535,7 +548,6 @@
         mobileMenuBtn.addEventListener('click', toggleMenu);
         mobileNavLinks.forEach(link => link.addEventListener('click', toggleMenu));
 
-        // Modern Scroll tracking using requestAnimationFrame for the Navbar
         let ticking = false;
 
         const updateNav = () => {
@@ -556,7 +568,6 @@
             }
         }, { passive: true });
 
-        // --- 3. Intersection Observer (Modern Scroll Reveals) ---
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -572,7 +583,6 @@
 
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        // --- 4. Multi-Step Form Logic ---
         let currentStep = 1;
         const totalSteps = 3;
 
